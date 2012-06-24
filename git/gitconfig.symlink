@@ -22,6 +22,8 @@
     untracked = cyan
 
 [alias]
+    # list aliases because I'm absent-minded and I want to make my life easier. hope I remember this alias...
+    alias = config --get-regexp alias
     br = branch
     # show all branches, even across remotes
     branches = branch -a --color -v
@@ -51,6 +53,8 @@
     track = checkout -t
     st = status
     stb = status -sb
+    # update submodules
+    upsub = submodule foreach git pull origin master
     # clean up fully merged branches
     sweep = !git-sweep
     # remove a file from the index

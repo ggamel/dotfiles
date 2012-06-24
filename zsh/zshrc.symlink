@@ -1,8 +1,6 @@
-export PATH=/Users/ggamel/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
+export PATH="$HOME/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/.rvm/bin"
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
 
-# Not sure if I need the rvm crap below. We'll see. Saved just in cases. If needed, add to PATH.
-# /Users/ggamel/.rvm/gems/ruby-1.9.2-p290/bin:/Users/ggamel/.rvm/gems/ruby-1.9.2-p290@global/bin:/Users/ggamel/.rvm/rubies/ruby-1.9.2-p290/bin:/Users/ggamel/.rvm/bin
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # shortcut to this dotfiles path is $ZSH

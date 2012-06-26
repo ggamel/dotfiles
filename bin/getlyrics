@@ -24,6 +24,7 @@
 # 	TODO: WRITE REGEX to match 'Sorry, We don'\''t have lyrics for this song yet.' then do or don't do stuff
 # 	TODO: WRITE REGEX to match '{{instrumental}}' then do or don't do stuff
 # 	TODO: WRITE REGEX to account for the variety of different characters w/symbols so lyric-finding is more accurate
+#	TODO: Consider using $cache_dir to store lyrics within nested album child dirs in artist parent dirs
 #	TODO: Write in something like Ruby if it makes sense.
 
 # Establish cached lyrics dir
@@ -56,6 +57,7 @@ echo "$gltitle"
 linebreak="
 /////////////////////////////////////////////////////////////////////////////
 "
+
 # Player states
 # iTunes states = 'stopped', 'playing'
 # Rdio states = 'paused', 'playing'

@@ -1,8 +1,6 @@
 export PATH="$HOME/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/.rvm/bin"
 export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 export DOTFILES=$HOME/.dotfiles

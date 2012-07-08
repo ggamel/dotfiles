@@ -1,0 +1,10 @@
+{
+	"auto_upgrade_last_run": 1341548657,
+	"installed_packages":
+	[
+		"CoffeeScript",
+		"Gist",
+		"Nettuts+ Fetch",
+		"Package Control"
+	]
+}

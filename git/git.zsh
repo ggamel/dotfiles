@@ -1,5 +1,5 @@
 export GHI_PAGER=less
-export GIT_SANDBOX=~/Design/sandbox
+export GIT_SANDBOX=~/Do/sandbox
 export GIT_MERGE_AUTOEDIT=no
 
 if [[ -f `command -v hub` ]] ; then alias git=hub ; fi

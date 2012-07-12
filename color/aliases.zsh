@@ -1,3 +1,5 @@
+# Color aliases
+
 # grc overides for ls
 #   Made possible through contributions from generous benefactors like
 #   `brew install coreutils`
@@ -8,3 +10,6 @@ then
   alias ll="gls -lF --color"
   alias la='gls -AF --color'
 fi
+
+# Color for curl
+alias curl="colourify curl -s"

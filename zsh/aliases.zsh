@@ -1,6 +1,14 @@
 alias cls='clear'
 alias reload!='. ~/.zshrc'
 
+# Shortcuts to make life easier
+alias d="cd ~/Do && open ~/Do"
+alias dot="cd ~/.dotfiles"
+alias actmo="open /Applications/Utilities/Activity\ Monitor.app"
+
+alias itunes="open /Applications/iTunes.app"
+alias rdio="open /Applications/Rdio.app"
+
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip_wifi="ipconfig getifaddr en0"

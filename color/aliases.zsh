@@ -12,4 +12,4 @@ then
 fi
 
 # Color for curl
-alias curl="colourify curl -s"
+alias gcurl="colourify curl -s"

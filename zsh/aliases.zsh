@@ -1,11 +1,12 @@
 alias cls='clear'
 alias reload!='. ~/.zshrc'
 
-# Shortcuts to make life easier
+# Term Shortcuts to make life easier
 alias d="cd ~/Do && open ~/Do"
 alias dot="cd ~/.dotfiles"
-alias actmo="open /Applications/Utilities/Activity\ Monitor.app"
 
+# App Shortcutsto make life easier
+alias actmo="open /Applications/Utilities/Activity\ Monitor.app"
 alias itunes="open /Applications/iTunes.app"
 alias rdio="open /Applications/Rdio.app"
 

@@ -37,6 +37,7 @@
 # 	TODO: WRITE REGEX to account for the variety of different characters w/symbols so lyric-finding is more accurate
 #	TODO: Consider using $cache_dir to store lyrics within nested album child dirs in artist parent dirs
 #	TODO: Write in something like Ruby if it makes sense.
+#	TODO: Consider implementing some logic for "sw_vers" and "sw_vers -productVersion" commands to determine OS and exec what's needed
 
 # Debugging shtuff - Use to add new features
 # exec 1>$cache_dir.${$}.log
@@ -91,9 +92,9 @@ for player in "${players[@]}"; do
 		if [ "$state" = "playing" ]; then
 
 		# We assign variables to the various AppleScript commands.
-		artist_name=$(arch -i386 osascript -e'tell application '\""$player"\"'' -e'get artist of current track' -e'end tell')
-		song_title=$(arch -i386 osascript -e'tell application '\""$player"\"'' -e'get name of current track' -e'end tell')
-		album_name=$(arch -i386 osascript -e'tell application '\""$player"\"'' -e'get album of current track' -e'end tell')
+		artist_name=$(osascript -e'tell application '\""$player"\"'' -e'get artist of current track' -e'end tell')
+		song_title=$(osascript -e'tell application '\""$player"\"'' -e'get name of current track' -e'end tell')
+		album_name=$(osascript -e'tell application '\""$player"\"'' -e'get album of current track' -e'end tell')
 		
 		# Account for spaces in artist name and song title, then try to curl the lyrics.
 		artist=$(echo $artist_name | sed "s/[[:space:]]/%20/g")

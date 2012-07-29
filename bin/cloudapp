@@ -47,11 +47,11 @@ end
 urls = []
 ARGV.each do |x|
   CloudApp.authenticate(email,password)
-  puts "Attempting to upload #{x}"
+  puts "==> Attempting to upload #{x}"
   url = CloudApp::Item.create(:upload, {:file => x}).url
 
   # Say it for good measure.
-  puts "Uploaded #{x} to #{url}"
+  puts "==> Uploaded #{x} to #{url}"
 
   # Get the embed link.
   url = "#{url}/#{ARGV[0].split('/').last}"

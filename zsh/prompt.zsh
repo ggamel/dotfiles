@@ -177,4 +177,5 @@ set_prompt () {
 
 precmd() {
   set_prompt
+  set_title_tab
 }

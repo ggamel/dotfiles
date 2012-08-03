@@ -39,3 +39,6 @@ alias hide="defaults write com.apple.Finder AppleShowAllFiles -bool false && kil
 # Hide/show all desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
+# Let's update all the things (OS X, Homebrew, Gems, npm)
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; gem update --system; gem update; npm update npm -g; npm update -g'

@@ -2,7 +2,7 @@ alias cls='clear'
 alias reload!='. ~/.zshrc'
 
 # Term Shortcuts to make life easier
-alias d="cd ~/Do && open ~/Do"
+alias d="cd ~/Do && open ~/Do && open /Applications/Sublime\ Text\ 2.app && open /Applications/CodeKit.app && open /Applications/Gitbox.app"
 alias dot="cd ~/.dotfiles"
 
 # App Shortcutsto make life easier

@@ -2,28 +2,26 @@
 #
 # 	getlyrics
 # 	by @ggamel, based on code by @febuiles
+#	https://github.com/ggamel/dotfiles/blob/master/bin/getlyrics
 #
 # 	A fun and easy way to get lyrics from iTunes, Rdio, Spotify, or more,
 # 	then optionally upload the lyrics to CloudApp, and finally open them
-# 	locally in your favorite $EDITOR.
-#
-# 
-# 	https://github.com/ggamel/dotfiles
+# 	locally in your favorite $EDITOR. 	
 #
 # 	Requires:
-#		* Mac OS, most likely. Didn't test in *nix
+#		* Mac OS, most likely. Didn't test in *nix, but it could probably be done.
 #		* $EDITOR of your choice specified in your .dotfiles. This is essential.
 #	
 #		* OPTIONAL: cloudapp by @holman AND cloudapp_api by @aaronrussell
 #		**	https://raw.github.com/holman/dotfiles/master/bin/cloudapp
 #				Save this to your .dotfiles. Don't forget to 'chmod +x cloudapp'
-#		**	gem install cloudapp_api
-#		** Sing the song, naturally!
+#		**	'gem install cloudapp_api'
+#		**	Add a file called .cloudap to your home dir with two lines "email" & "password" for CloudApp
 #
 #
 # 	TODO: WRITE REGEX to strip out (FEAT. ARTIST XYZ) - these songs break almost every time.
 #			
-#				# Haven't tested this, but this regex string should/might work:
+#				# Haven't tested this, but this regex string should/might possibly work:
 #				echo "$song_title" | grep -q "/(.feat.*)/g"
 #				if [ $? -eq 0 ]; then
 #				    STRIP OUT (feat.) and pass the purified string to $artist
@@ -34,10 +32,14 @@
 #	TODO: Ask (nicely!) for assistance from @febuiles to improve results for artists without singular names (e.g. Marina & the Diamonds fails, by Lyrics Wikia has every album/song lyric).
 # 	TODO: WRITE REGEX to match 'Sorry, We don'\''t have lyrics for this song yet.' then do or don't do stuff
 # 	TODO: WRITE REGEX to match '{{instrumental}}' then do or don't do stuff
-# 	TODO: WRITE REGEX to account for the variety of different characters w/symbols so lyric-finding is more accurate
-#	TODO: Consider using $cache_dir to store lyrics within nested album child dirs in artist parent dirs
-#	TODO: Write in something like Ruby if it makes sense.
-#	TODO: Consider implementing some logic for "sw_vers" and "sw_vers -productVersion" commands to determine OS and exec what's needed
+# 	TODO: WRITE REGEX to find/replace different chars w/symbols so lyric-finding is more accurate
+#	TODO: Consider using $cache_dir to store lyrics within nested album child dirs in artist parent dirs. Mini per-user lyrics repos?
+#	TODO: Write in something like Ruby if it makes sense down the road. Who knows?
+#	TODO: Consider implementing some logic for "sw_vers" and "sw_vers -productVersion" commands to determine OS and exec only what's needed
+#	TODO: Improve ASCII art to feature song title and artist name more prominently.
+#	TODO: Consider outputting as BOTH plain text to computer/CloudApp AND super-minimal-super-readable-yet-awesome 
+#		  HTML files w/embedded CSS. This could even be the start of a fun little web app/service. Could use this script 
+#		  or find lyrics on site. Who knows? Maybe not, but maybe yes.
 
 # Debugging shtuff - Use to add new features
 # exec 1>$cache_dir.${$}.log
@@ -78,8 +80,8 @@ linebreak="
 # - Spotify states = '???', 'playing' (No idea what the paused/stopped state is for Spotify)
 
 # Add the AppleScript-supporting music apps to array.
-# Next, loop through that array for fun & profit.
-players=( iTunes Rdio Spotify )
+# Next, loop through array for fun & profit. To add new music app names: players=( iTunes Rdio Spotify )
+players=( iTunes Rdio )
 for player in "${players[@]}"; do
 
 	# Check with killall to see if the application process can be found.
@@ -96,6 +98,9 @@ for player in "${players[@]}"; do
 		song_title=$(osascript -e'tell application '\""$player"\"'' -e'get name of current track' -e'end tell')
 		album_name=$(osascript -e'tell application '\""$player"\"'' -e'get album of current track' -e'end tell')
 		
+		# Let's clean up song_title, first
+		# Stuff will go here eventually, but I'm too damned tired to do it right now.
+
 		# Account for spaces in artist name and song title, then try to curl the lyrics.
 		artist=$(echo $artist_name | sed "s/[[:space:]]/%20/g")
 		title=$(echo $song_title | sed "s/[[:space:]]/%20/g")
@@ -120,6 +125,7 @@ for player in "${players[@]}"; do
 		echo "==> Get ready to start singing!" && echo "$linebreak"
 		sleep 1.4
 		echo "==> Launching $EDITOR"
+		
 		# Let's pause one last time to allow the user to read the above echo
 		sleep 3.2
 

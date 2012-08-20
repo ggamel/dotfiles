@@ -9,7 +9,7 @@
 # 	locally in your favorite $EDITOR. 	
 #
 # 	Requires:
-#		* Mac OS, most likely. Didn't test in *nix, but it could probably be done.
+#		* OS X, most likely. Didn't test in *nix, but it could probably be done.
 #		* $EDITOR of your choice specified in your .dotfiles. This is essential.
 #	
 #		* OPTIONAL: cloudapp by @holman AND cloudapp_api by @aaronrussell

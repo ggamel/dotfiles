@@ -16,7 +16,7 @@
 #		**	https://raw.github.com/holman/dotfiles/master/bin/cloudapp
 #				Save this to your .dotfiles. Don't forget to 'chmod +x cloudapp'
 #		**	'gem install cloudapp_api'
-#		**	Add a file called .cloudap to your home dir with two lines "email" & "password" for CloudApp
+#		**	Add a file called .cloudapp to your home dir with two lines "email" & "password" for CloudApp authentication
 #
 #
 # 	TODO: WRITE REGEX to strip out (FEAT. ARTIST XYZ) - these songs break almost every time.

@@ -10,6 +10,6 @@ I'll be trying to routinely commit my changes to reflect my current dotfiles. Ba
 
 ## Install!?
 
-- `git clone git://github.com/holman/dotfiles ~/.dotfiles`
+- `git clone git://github.com/ggamel/dotfiles ~/.dotfiles`
 - `cd ~/.dotfiles`
 - `rake install`

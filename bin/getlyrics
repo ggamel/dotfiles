@@ -1,45 +1,45 @@
 #!/bin/bash
 #
-# 	getlyrics
-# 	by @ggamel, based on code by @febuiles
-#	https://github.com/ggamel/dotfiles/blob/master/bin/getlyrics
+#   getlyrics
+#   by @ggamel, based on code by @febuiles
+# https://github.com/ggamel/dotfiles/blob/master/bin/getlyrics
 #
-# 	A fun and easy way to get lyrics from iTunes, Rdio, Spotify, or more,
-# 	then optionally upload the lyrics to CloudApp, and finally open them
-# 	locally in your favorite $EDITOR. 	
+#   A fun and easy way to get lyrics from iTunes, Rdio, Spotify, or more,
+#   then optionally upload the lyrics to CloudApp, and finally open them
+#   locally in your favorite $EDITOR.
 #
-# 	Requires:
-#		* OS X, most likely. Didn't test in *nix, but it could probably be done.
-#		* $EDITOR of your choice specified in your .dotfiles. This is essential.
-#	
-#		* OPTIONAL: cloudapp by @holman AND cloudapp_api by @aaronrussell
-#		**	https://raw.github.com/holman/dotfiles/master/bin/cloudapp
-#				Save this to your .dotfiles. Don't forget to 'chmod +x cloudapp'
-#		**	'gem install cloudapp_api'
-#		**	Add a file called .cloudapp to your home dir with two lines "email" & "password" for CloudApp auth
+#   Requires:
+#   * OS X, most likely. Didn't test in *nix, but it could probably be done.
+#   * $EDITOR of your choice specified in your .dotfiles. This is essential.
+#
+#   * OPTIONAL: cloudapp by @holman AND cloudapp_api by @aaronrussell
+#   **  https://raw.github.com/holman/dotfiles/master/bin/cloudapp
+#       Save this to your .dotfiles. Don't forget to 'chmod +x cloudapp'
+#   **  'gem install cloudapp_api'
+#   **  Add a file called .cloudapp to your home dir with two lines "email" & "password" for CloudApp auth
 #
 #
-# 	TODO: WRITE REGEX to strip out (FEAT. ARTIST XYZ) - these songs break almost every time.
-#			
-#				# Haven't tested this, but this regex string should/might possibly work:
-#				echo "$song_title" | grep -q "/(.feat.*)/g"
-#				if [ $? -eq 0 ]; then
-#				    STRIP OUT (feat.) and pass the purified string to $artist
-#				else
-#				    proceed as usual if no (feat.) found
-#				fi			
-#	
-#	TODO: Ask (nicely!) for assistance from @febuiles to improve results for artists without singular names (e.g. Marina & the Diamonds fails, by Lyrics Wikia has every album/song lyric).
-# 	TODO: WRITE REGEX to match 'Sorry, We don'\''t have lyrics for this song yet.' then do or don't do stuff
-# 	TODO: WRITE REGEX to match '{{instrumental}}' then do or don't do stuff
-# 	TODO: WRITE REGEX to find/replace different chars w/symbols so lyric-finding is more accurate
-#	TODO: Consider using $cache_dir to store lyrics within nested album child dirs in artist parent dirs. Mini per-user lyrics repos?
-#	TODO: Write in something like Ruby if it makes sense down the road. Who knows?
-#	TODO: Consider implementing some logic for "sw_vers" and "sw_vers -productVersion" commands to determine OS and exec only what's needed
-#	TODO: Improve ASCII art to feature song title and artist name more prominently.
-#	TODO: Consider outputting as BOTH plain text to computer/CloudApp AND super-minimal-super-readable-yet-awesome 
-#		  HTML files w/embedded CSS. This could even be the start of a fun little web app/service. Could use this script 
-#		  or find lyrics on site. Who knows? Maybe not, but maybe yes.
+#   TODO: WRITE REGEX to strip out (FEAT. ARTIST XYZ) - these songs break almost every time.
+#
+#       # Haven't tested this, but this regex string should/might possibly work:
+#       echo "$song_title" | grep -q "/(.feat.*)/g"
+#       if [ $? -eq 0 ]; then
+#           STRIP OUT (feat.) and pass the purified string to $artist
+#       else
+#           proceed as usual if no (feat.) found
+#       fi
+#
+# TODO: Ask (nicely!) for assistance from @febuiles to improve results for artists without singular names (e.g. Marina & the Diamonds fails, by Lyrics Wikia has every album/song lyric).
+#   TODO: WRITE REGEX to match 'Sorry, We don'\''t have lyrics for this song yet.' then do or don't do stuff
+#   TODO: WRITE REGEX to match '{{instrumental}}' then do or don't do stuff
+#   TODO: WRITE REGEX to find/replace different chars w/symbols so lyric-finding is more accurate
+# TODO: Consider using $cache_dir to store lyrics within nested album child dirs in artist parent dirs. Mini per-user lyrics repos?
+# TODO: Write in something like Ruby if it makes sense down the road. Who knows?
+# TODO: Consider implementing some logic for "sw_vers" and "sw_vers -productVersion" commands to determine OS and exec only what's needed
+# TODO: Improve ASCII art to feature song title and artist name more prominently.
+# TODO: Consider outputting as BOTH plain text to computer/CloudApp AND super-minimal-super-readable-yet-awesome
+#     HTML files w/embedded CSS. This could even be the start of a fun little web app/service. Could use this script
+#     or find lyrics on site. Who knows? Maybe not, but maybe yes.
 
 # Debugging shtuff - Use to add new features
 # exec 1>$cache_dir.${$}.log
@@ -47,7 +47,7 @@
 # EXTRA awesome debug (use without the two lines above): /bin/bash -x getlyrics
 
 # Establish cached lyrics dir
-cache_dir=~/.dotfiles/caches/lyrics
+cache_dir=~/.dotfiles/caches/getlyrics
 
 # Create lyrics directory if it doesn't exist.
 [[ -e "$cache_dir" ]] || mkdir -p "$cache_dir"
@@ -55,9 +55,8 @@ cache_dir=~/.dotfiles/caches/lyrics
 # Let's intro with some ASCII, because why the hell not?
 gltitle="
 #############################################################################
-#                                                                           #
 #                   *       *                                               #
-#           *  _____      _   _     *          _          *                 #
+#           *   ____      _   _     *          _          *                 #
 #             / ____|    | | | |              (_)     *                     #
 #            | |  __  ___| |_| |    _   _ _ __ _  ___ ___      *            #
 #            | | |_ |/ _ | __| |   | | | | '__| |/ __/ __|                  #
@@ -66,7 +65,6 @@ gltitle="
 #                      *             __/ |  *               *               #
 #           *             *         |___/     *                             #
 #                  *           *                                            #
-#                                                                           #
 #############################################################################
 "
 echo "$gltitle"
@@ -80,58 +78,62 @@ linebreak="
 # - Spotify states = '???', 'playing' (No idea what the paused/stopped state is for Spotify)
 
 # Add the AppleScript-supporting music apps to array.
-# Next, loop through array for fun & profit. To add new music app names: players=( iTunes Rdio Spotify )
+# To add new music app names: players=( iTunes Rdio Spotify )
+# Next, loop through array for fun & profit.
 players=( iTunes Rdio )
 for player in "${players[@]}"; do
 
-	# Check with killall to see if the application process can be found.
-	killall -s $player &> /dev/null
+  # Check with killall to see if the app process can be found. Yes, really, killall is awesome like that.
+  killall -s $player &> /dev/null
 
-	# If the process is found, we allow the AppleScript to get the state as a string.
-	if [ $? -eq 0 ]; then
+  # If the process is found, we allow the AppleScript to get the state as a string.
+  if [ $? -eq 0 ]; then
 
-		state=$(osascript -e 'tell application '\""$player"\"' to player state as string');
-		if [ "$state" = "playing" ]; then
+    state=$(osascript -e'tell application '\""$player"\"' to player state as string');
+    if [ "$state" = "playing" ]; then
 
-		# We assign variables to the various AppleScript commands.
-		artist_name=$(osascript -e'tell application '\""$player"\"'' -e'get artist of current track' -e'end tell')
-		song_title=$(osascript -e'tell application '\""$player"\"'' -e'get name of current track' -e'end tell')
-		album_name=$(osascript -e'tell application '\""$player"\"'' -e'get album of current track' -e'end tell')
-		
-		# Let's clean up song_title, first
-		# Stuff will go here eventually, but I'm too damned tired to do it right now.
+    # We assign variables to the various AppleScript commands.
+    artist_name=$(osascript -e'tell application '\""$player"\"'' -e'get artist of current track' -e'end tell')
+    song_title=$(osascript -e'tell application '\""$player"\"'' -e'get name of current track' -e'end tell')
+    album_name=$(osascript -e'tell application '\""$player"\"'' -e'get album of current track' -e'end tell')
 
-		# Account for spaces in artist name and song title, then try to curl the lyrics.
-		artist=$(echo $artist_name | sed "s/[[:space:]]/%20/g")
-		title=$(echo $song_title | sed "s/[[:space:]]/%20/g")
-		song=$(curl -s --progress-bar "http://makeitpersonal.co/lyrics?artist=$artist&title=$title")
+    # Let's clean up song_title, first
+    # Stuff will go here eventually, but I'm too damned tired to do it right now.
 
-		# Establish the filename for lyrics text file.
-		file=$cache_dir/"$artist_name - $song_title.txt"
-		
-		# Check if file doesn't exist. Make new lyrics text file if it doesn't.
-		[[ -e "$file" ]] || echo -e "---""\n$artist_name - $song_title\n$album_name\n""---""\n$song" > "$file"
+    # Account for spaces in artist name and song title, then try to curl the lyrics.
+    artist=$(echo $artist_name | sed "s/[[:space:]]/%20/g")
+    title=$(echo $song_title | sed "s/[[:space:]]/%20/g")
+    song=$(curl -s "http://makeitpersonal.co/lyrics?artist=$artist&title=$title")
+
+    # Doesn't work at all. Grr. Argh.
+    # song=$(curl -G --data-urlencode "artist=$artist" --data-urlencode "title=$title" -s http://makeitpersonal.co/lyrics)
+
+    # Establish the filename for lyrics text file.
+    file=$cache_dir/"$artist_name - $song_title.txt"
+
+    # Check if file doesn't exist. Make new lyrics text file if it doesn't.
+    [[ -e "$file" ]] || echo -e "---""\n$artist_name - $song_title\n$album_name\n""---""\n$song" > "$file"
 
 
-		# OPTIONAL: Send lyrics to CloudApp and copy url to clipboard
-		# Comment out to not use. Uncomment to use.
-		cloudapp "$file" && echo "$linebreak"
-		
-		# Let's pause for a moment
-		sleep 1
-		
-		# Say we're opening the lyrics
-		echo "==> Opening lyrics for $song_title, currently playing in $player!"
-		echo "==> Get ready to start singing!" && echo "$linebreak"
-		sleep 1.4
-		echo "==> Launching $EDITOR"
-		
-		# Let's pause one last time to allow the user to read the above echo
-		sleep 3.2
+    # OPTIONAL: Send lyrics to CloudApp and copy url to clipboard
+    # Comment out to not use. Uncomment to use.
+    cloudapp "$file" && echo "$linebreak"
 
-		# Open lyrics text file, assuming it exists!
-		[[ -e "$file" ]] && $EDITOR "$file"
+    # Let's pause for a moment
+    sleep 1
 
-		fi
-	fi
+    # Say we're opening the lyrics
+    echo "==> Opening lyrics for $song_title, currently playing in $player!"
+    echo "==> Get ready to start singing along!" && echo "$linebreak"
+    sleep 1.4
+    echo "==> Launching $EDITOR"
+
+    # Let's pause one last time to allow the user to read the above echo
+    sleep 2.2
+
+    # Open lyrics text file, assuming it exists!
+    [[ -e "$file" ]] && $EDITOR "$file"
+
+    fi
+  fi
 done

@@ -1,4 +1,4 @@
-alias cls='clear'
+  alias cls='clear'
 alias reload!='. ~/.zshrc'
 
 # Term Shortcuts to make life easier

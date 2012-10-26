@@ -1,14 +1,17 @@
-  alias cls='clear'
+alias cls='clear'
 alias reload!='. ~/.zshrc'
 
 # Term Shortcuts to make life easier
 alias d="cd ~/Do && open ~/Do && open /Applications/Sublime\ Text\ 2.app && open /Applications/CodeKit.app && open /Applications/Gitbox.app && open /Applications/Workflowy.app"
 alias dot="cd ~/.dotfiles"
 
-# App Shortcutsto make life easier
+# App Shortcuts to make life easier
 alias actmo="open /Applications/Utilities/Activity\ Monitor.app"
 alias itunes="open /Applications/iTunes.app"
 alias rdio="open /Applications/Rdio.app"
+
+# Get all bukk.it images
+alias bukkit="wget -r -nc -e robots=off --wait 0.25 -A.jpeg,jpg,bmp,gif,png -P ~/Dropbox/IMGs http://bukk.it"
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"

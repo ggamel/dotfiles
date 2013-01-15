@@ -12,11 +12,7 @@
 #   * OS X, most likely. Didn't test in *nix, but it could probably be done.
 #   * $EDITOR of your choice specified in your .dotfiles. This is essential.
 #
-#   * OPTIONAL: cloudapp by @holman AND cloudapp_api by @aaronrussell
-#   **  https://raw.github.com/holman/dotfiles/master/bin/cloudapp
-#       Save this to your .dotfiles. Don't forget to 'chmod +x cloudapp'
-#   **  'gem install cloudapp_api'
-#   **  Add a file called .cloudapp to your home dir with two lines "email" & "password" for CloudApp auth
+#   * OPTIONAL: cloudapp by @cloudapp (gem install cloudapp)
 #
 #
 #   TODO: WRITE REGEX to strip out (FEAT. ARTIST XYZ) - these songs break almost every time.
@@ -52,11 +48,12 @@ cache_dir=~/.dotfiles/caches/getlyrics
 # Create lyrics directory if it doesn't exist.
 [[ -e "$cache_dir" ]] || mkdir -p "$cache_dir"
 
-# Let's intro with some ASCII, because why the hell not?
-getlyrics_art () {
-    echo "buttes"
-}
-getlyrics_art
+# # Let's intro with some ASCII, because why the hell not?
+# MAKE SOME NEW GETLYRICS ART
+# getlyrics_art () {
+#     echo "buttes"
+# }
+# getlyrics_art
 
 
 # gltitle="

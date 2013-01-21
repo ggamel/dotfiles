@@ -1,20 +1,28 @@
-export PATH="$HOME/.dotfiles/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/.rbenv/bin:/usr/local/bin/npm:/usr/local/share/npm/bin:$PATH"
-
-export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
-export NODE_PATH="/usr/local/lib/node"
-
-# Let's connect rbenv
-eval "$(rbenv init -)"
-
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 export DOTFILES=$HOME/.dotfiles
 
+# export NGINX_PATH=/opt/nginx
+# export PGDATA=/usr/local/var/postgres
+
 # Do folder
 export PROJECTS=~/Do
 
-# source every .zsh file in this rep
-for config_file ($ZSH/**/*.zsh) [[ "$(basename $config_file)" == "completion.zsh" ]] || source $config_file
+# all of our zsh files
+typeset -U config_files
+config_files=($ZSH/**/*.zsh)
+
+# source path files
+for file in ${(M)config_files:#*/path.zsh}
+do
+  source $file
+done
+
+# source every .zsh file but path and completion in the repo.
+for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
+do
+  source $file
+done
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -28,4 +36,9 @@ autoload -U compinit
 compinit
 
 # load every completion after autocomplete loads
-for config_file ($ZSH/**/completion.sh) source $config_file
+for file in ${(M)config_files:#*/completion.zsh}
+do
+  source $file
+done
+
+unset config_files

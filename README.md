@@ -2,7 +2,7 @@
 
 ## What?
 
-Greg Gamel's dotfiles. These help me surf the waves of the internet with more ease. Much has been borrowed from @pengwynn, @holman, and @adamyonk (who likely borrowed much from other smart folks).
+Greg Gamel's dotfiles. These help me surf the waves of the internet with more ease. Much has been borrowed from @pengwynn, @holman, and @adamyonk (who borrowed much from other smart folks).
 
 ## How?
 
@@ -10,6 +10,8 @@ I'll be trying to routinely commit my changes to reflect my current dotfiles. Ba
 
 ## Install!?
 
-- `git clone git://github.com/ggamel/dotfiles ~/.dotfiles`
-- `cd ~/.dotfiles`
-- `rake install`
+```sh
+git clone https://github.com/ggamel/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+script/bootstrap
+```

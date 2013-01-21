@@ -1,7 +1,8 @@
 # Taken from https://github.com/adamyonk/dotfiles ;)
 
-# Load rbenv
-#eval "$(rbenv init -)"
+# Load rbenv & set the proper rbenv $PATH nonsense (this is important or everything fails)
+eval "$(rbenv init -)"
+PATH="$HOME/.rbenv/bin:$PATH"
 
 # # Load chruby
 # source /usr/local/share/chruby/chruby.sh

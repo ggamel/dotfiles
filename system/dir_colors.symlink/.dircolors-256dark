@@ -47,6 +47,7 @@ TERM rxvt-unicode-256color
 TERM screen
 TERM screen-256color
 TERM screen-256color-bce
+TERM screen-256color-s
 TERM screen-bce
 TERM screen-w
 TERM screen.linux
@@ -135,6 +136,7 @@ EXEC 01;38;5;64
 .7z     01;38;5;61
 .rz     01;38;5;61
 .apk    01;38;5;61
+.gem    01;38;5;61
 
 # Image formats (yellow)
 .jpg    00;38;5;136
@@ -173,6 +175,7 @@ EXEC 01;38;5;64
 .ttl             01;38;5;245
 .nt              01;38;5;245
 .torrent         01;38;5;245
+.xml             01;38;5;245
 *Makefile        01;38;5;245
 *Rakefile        01;38;5;245
 *build.xml       01;38;5;245
@@ -182,20 +185,24 @@ EXEC 01;38;5;64
 *README          01;38;5;245
 *README.txt      01;38;5;245
 *readme.txt      01;38;5;245
-*README.md       01;38;5;245
-*README.markdown 01;38;5;245
-*ini             01;38;5;245
-*yml             01;38;5;245
-*cfg             01;38;5;245
-*conf            01;38;5;245
-.html            01;38;5;245
-.htm             01;38;5;245
-.js              01;38;5;245
-.coffe           01;38;5;245
 .md              01;38;5;245
 .MD              01;38;5;245
 .markdown        01;38;5;245
 .MARKDOWN        01;38;5;245
+*README.md       01;38;5;245
+*readme.md       01;38;5;245
+*README.markdown 01;38;5;245
+.ini             01;38;5;245
+.yml             01;38;5;245
+.cfg             01;38;5;245
+.conf            01;38;5;245
+.c               01;38;5;245
+.cpp             01;38;5;245
+.cc              01;38;5;245
+.html            01;38;5;245
+.htm             01;38;5;245
+.js              01;38;5;245
+.coffee          01;38;5;245
 .txt             01;38;5;245
 .rb              01;38;5;245
 .zsh             01;38;5;245
@@ -260,6 +267,8 @@ EXEC 01;38;5;64
 .flv    01;38;5;166
 .gl     01;38;5;166
 .m2ts   01;38;5;166
+.divx   01;38;5;166
+.webm   01;38;5;166
 # http://wiki.xiph.org/index.php/MIME_Types_and_File_Extensions
 .axv 01;38;5;166
 .anx 01;38;5;166

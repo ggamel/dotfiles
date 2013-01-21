@@ -1,4 +1,4 @@
-# Gdircolors ZSH Coloring Magic
+# gdircolors ZSH Coloring Magic
 # ggamel (http://github.com/ggamel)
 #
 # This file should cause ZSH to load
@@ -6,7 +6,7 @@
 # session.
 #
 # Remember: You need to have coreutils installed
-# in order to use 'gls'. Assuming you have homebrew 
+# in order to use 'gls'. Assuming you have homebrew
 # installed, run the following to get the party started:
 # ( 'brew install coreutils' )
 #
@@ -21,10 +21,11 @@ alias dircolors="gdircolors"
 #
 # Credit for the Solarized Dark color database goes to
 # seebi: https://github.com/seebi/dircolors-solarized
-# 
+#
 # This step is necessary because Solarized for Terminal or iTerm2
 # is fantastic, but both 'ls' and 'gls' produce horrible shades
-# of grey, instead of nice colors. 
+# of grey, instead of nice colors.
 # By loading the database file, we have an even
 # better terminal experience.
-eval `dircolors ~/.dotfiles/color/.dircolors`
+eval `dircolors ~/.dir_colors/.dircolors`
+# eval `dircolors $ZSH/system/**/dircolors-solarized.256dark`

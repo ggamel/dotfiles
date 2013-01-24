@@ -28,4 +28,3 @@ alias dircolors="gdircolors"
 # By loading the database file, we have an even
 # better terminal experience.
 eval `dircolors ~/.dir_colors/.dircolors`
-# eval `dircolors $ZSH/system/**/dircolors-solarized.256dark`

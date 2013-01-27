@@ -120,7 +120,7 @@ for player in "${players[@]}"; do
 
     # OPTIONAL: Send lyrics to CloudApp and copy url to clipboard
     # Comment out to not use. Uncomment to use.
-    cloudapp upload "$file" && echo "$linebreak"
+    cloudapp "$file" && echo "$linebreak"
 
     # Let's pause for a moment
     sleep 1

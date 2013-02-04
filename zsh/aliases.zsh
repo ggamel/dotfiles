@@ -1,5 +1,5 @@
-alias cls='clear'
-alias reload!='. ~/.zshrc'
+alias cls="clear"
+alias reload!=". ~/.zshrc"
 
 # Terminal Shortcuts to make life easier
 alias d="cd ~/Do && open ~/Do && open /Applications/Sublime\ Text\ 2.app && open /Applications/CodeKit.app && open /Applications/Gitbox.app"
@@ -45,7 +45,7 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 alias ds_nomore="find . -type f -name '*.DS_Store' -ls -delete"
 
 # ROT13-encode text. Works for decoding, too! ;)
-alias rot13='tr a-zA-Z n-za-mN-ZA-M'
+alias rot13="tr a-zA-Z n-za-mN-ZA-M"
 
 # Show/hide hidden files in Finder
 alias show="defaults write com.apple.Finder AppleShowAllFiles -bool true && killall Finder"

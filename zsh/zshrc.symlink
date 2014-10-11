@@ -1,16 +1,16 @@
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
-export DOTFILES=$HOME/.dotfiles
 
-# export NGINX_PATH=/opt/nginx
-# export PGDATA=/usr/local/var/postgres
-
-# Do folder
-export PROJECTS=~/Do
+# use .localrc for SUPER SECRET CRAP that you don't
+# want in your public, versioned repo.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
 
 # all of our zsh files
 typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+config_files=($ZSH/*/*.zsh)
 
 # source path files
 for file in ${(M)config_files:#*/path.zsh}
@@ -24,12 +24,6 @@ do
   source $file
 done
 
-# use .localrc for SUPER SECRET CRAP that you don't
-# want in your public, versioned repo.
-if [[ -a ~/.localrc ]]
-then
-  source ~/.localrc
-fi
 
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -U compinit
@@ -40,5 +34,11 @@ for file in ${(M)config_files:#*/completion.zsh}
 do
   source $file
 done
+
+# initialize colored prompts
+autoload -U promptinit && promptinit
+prompt pure
+
+
 
 unset config_files

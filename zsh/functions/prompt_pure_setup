@@ -1,0 +1,1 @@
+/usr/local/share/zsh/site-functions/prompt_pure_setup

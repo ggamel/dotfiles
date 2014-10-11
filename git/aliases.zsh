@@ -1,13 +1,22 @@
-export GHI_PAGER=less
-export GIT_SANDBOX=~/Do/sandbox
 export GIT_MERGE_AUTOEDIT=no
 
-# tl;dr hub is better than vanilla git
+# Wrap git with hub
 hub_path=$(which hub)
 if (( $+commands[hub] ))
 then
   alias git=$hub_path
 fi
-# make g alias git, which is actually hub: less typing
-alias g='git'
 
+function g {
+    if [[ $# > 0 ]]; then
+        git "$@"
+    else
+        echo "Last commit: $(time_since_last_commit) ago"
+        git status --short --branch
+    fi
+}
+
+function time_since_last_commit() {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  git log -1 --pretty=format:"%ar" | sed 's/\([0-9]*\) \(.\).*/\1\2/'
+}

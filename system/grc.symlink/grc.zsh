@@ -12,7 +12,7 @@ fi
 #   `brew install coreutils`
 if $(gls &>/dev/null)
 then
-  alias l="gls -lAhF --color=auto"
+  alias l="gls -lAhF --color=auto --group-directories-first"
   alias ls="gls -F --color=auto"
   alias ll="gls -lF --color=auto"
   alias la="gls -AF --color=auto"

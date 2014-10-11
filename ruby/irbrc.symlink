@@ -1,74 +1,40 @@
-if defined?(::Bundler)
-  global_gemset = ENV['GEM_PATH'].split(':').grep(/ruby.*@global/).first
-  if global_gemset
-    all_global_gem_paths = Dir.glob("#{global_gemset}/gems/*")
-    all_global_gem_paths.each do |p|
-      gem_path = "#{p}/lib"
-      $LOAD_PATH << gem_path
-    end
-  end
-end
+#!/usr/bin/ruby
+require 'irb/completion'
+require 'irb/ext/save-history'
+require 'rubygems'
 
-require 'rubygems' rescue nil
-require 'wirble'
-require 'awesome_print'
+IRB.conf[:SAVE_HISTORY] = 1000
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
 
-# load wirble
-Wirble.init
-Wirble.colorize
-
-unless IRB.version.include?('DietRB')
-  IRB::Irb.class_eval do
-    def output_value
-      ap @context.last_value
-    end
-  end
-else # MacRuby
-  IRB.formatter = Class.new(IRB::Formatter) do
-    def inspect_object(object)
-      object.ai
-    end
-  end.new
-end
-
-# load hirb
+IRB.conf[:PROMPT_MODE] = :SIMPLE
 
 IRB.conf[:AUTO_INDENT] = true
 
-if ENV.include?('RAILS_ENV')
-  if !Object.const_defined?('RAILS_DEFAULT_LOGGER')
-    require 'logger'
-    Object.const_set('RAILS_DEFAULT_LOGGER', Logger.new(STDOUT))
+class Object
+  # list methods which aren't in superclass
+  def local_methods(obj = self)
+    (obj.methods - obj.class.superclass.instance_methods).sort
   end
 
-  def sql(query)
-    ActiveRecord::Base.connection.select_all(query)
+  # print documentation
+  #
+  #   ri 'Array#pop'
+  #   Array.ri
+  #   Array.ri :pop
+  #   arr.ri :pop
+  def ri(method = nil)
+    unless method && method =~ /^[A-Z]/ # if class isn't specified
+      klass = self.kind_of?(Class) ? name : self.class.name
+      method = [klass, method].compact.join('#')
+    end
+    puts `ri '#{method}'`
   end
-
-  if ENV['RAILS_ENV'] == 'test'
-    require 'test/test_helper'
-  end
-
-# for rails 3
-elsif defined?(Rails) && !Rails.env.nil? && defined?(ActiveRecord)
-  if Rails.logger
-    Rails.logger =Logger.new(STDOUT)
-    ActiveRecord::Base.logger = Rails.logger
-  end
-  if Rails.env == 'test'
-    require 'test/test_helper'
-  end
-else
-  # nothing to do
 end
 
-if defined?(Mongoid)
-  Mongoid.config.logger = Logger.new($stdout)
+def me
+  User.find_by_login(ENV['USER'].strip)
 end
 
-# annotate column names of an AR model
-def show(obj)
-  y(obj.send("column_names"))
+def r
+  reload!
 end
-
-puts "> all systems are go wirble/hirb/ap/show <"

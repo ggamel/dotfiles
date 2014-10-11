@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Web archive to backup & reduce risk of data loss
+#
+set -e
+
+wget -mpck --user-agent="" -e robots=off --wait 1 $1

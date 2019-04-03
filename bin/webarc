@@ -4,4 +4,4 @@
 #
 set -e
 
-wget -mpck --user-agent="" -e robots=off --wait 1 $1
+wget -mpck --user-agent="firefox" -e robots=off --wait 1 $1

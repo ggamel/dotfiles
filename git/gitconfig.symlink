@@ -65,7 +65,7 @@
 
 [core]
     excludesfile = ~/.gitignore_global
-    editor = subl
+    editor = code
 	quotepath = false
 
 [branch]

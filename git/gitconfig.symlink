@@ -27,7 +27,8 @@
 
 [alias]
     # list aliases because I'm absent-minded and I want to make my life easier. hope I remember this alias...
-    alias = config --get-regexp alias
+    aliases = config --get-regexp alias
+    la = !git config --list | grep ^alias\\. | cut -c 7- | grep -Ei --color \"$1\" "#" # List aliases
     br = branch
     # show all branches, even across remotes
     branches = branch -a --color -v
@@ -64,7 +65,7 @@
 
 [core]
     excludesfile = ~/.gitignore_global
-    editor = subl -w
+    editor = subl
 	quotepath = false
 
 [branch]
@@ -94,6 +95,15 @@
 [apply]
     whitespace = nowarn
 [filter "media"]
+	required = true
 	clean = git media clean %f
 	smudge = git media smudge %f
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
 	required = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
